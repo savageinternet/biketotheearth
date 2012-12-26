@@ -1,6 +1,6 @@
 from xhpy.pylib import *
 
-countries = {
+country_names = {
   'al': 'Albania',
   'ba': 'Bosnia and Herzegovina',
   'be': 'Belgium',
@@ -24,7 +24,7 @@ countries = {
 }
 
 class :ui:page(:x:element):
-  attribute string title
+  attribute unicode title
   def render(self):
     return \
     <x:doctype>
@@ -60,7 +60,7 @@ class :ui:index-section(:x:element):
         <img src={'/icons/{0}.png'.format(country)} />
       </div>
       <div class="country-name">
-        {countries[country]}
+        {country_names[country]}
       </div>
       {self._posts}
     </div>
@@ -93,7 +93,7 @@ def render_index(posts):
       countries.append(<ui:index-section country={data['country']} />)
     countries[-1].addPost(data)
   page = \
-  <ui:page title="Bike To The Earth">
+  <ui:page title={u"Bike To The Earth"}>
     <div id="root">
       <div id="title">
         <h1>Bike to the Earth</h1>
@@ -107,16 +107,21 @@ def render_index(posts):
 
 def render_post(data):
   country_href = '/index.html#{0}'.format(data['country'])
+  nav = \
+  <div class="nav">
+    <div class="post-link">
+      {_link(data['prev'].get('href'), 'prev')}
+    </div>
+    <div class="post-link">
+      {_link(data['next'].get('href'), 'next')}
+    </div>
+    <div class="post-link">
+      {_link('/index.html', 'index')}
+    </div>
+  </div>
   post = \
   <div id="root">
-    <div id="nav">
-      <div class="post-link">
-        {_link(data['prev'].get('href'), '[prev]')}
-      </div>
-      <div class="post-link">
-        {_link(data['next'].get('href'), '[next]')}
-      </div>
-    </div>
+    {nav}
     <div id="title">
       <h1>{data['title']}</h1>
     </div>
@@ -128,7 +133,7 @@ def render_post(data):
           </a>
         </div>
         <div class="country-name">
-          {countries[data['country']]}
+          {country_names[data['country']]}
         </div>
       </div>
       <div class="post-date">
@@ -140,6 +145,7 @@ def render_post(data):
         {data['content']}
       </ui:raw>
     </div>
+    {nav}
   </div>
   page = \
   <ui:page title={data['title']}>

@@ -22,6 +22,7 @@ root = sys.argv[1]
 posts = [json.loads(line) for line in sys.stdin]
 posts.sort(key=lambda post: post['order'])
 for i, data in enumerate(posts):
+  print u'Generating post: {0}'.format(data['title'])
   data['prev'] = {}
   data['next'] = {}
   if i > 0:
