@@ -116,7 +116,7 @@ def render_post(data):
       {_link(data['next'].get('href'), 'next')}
     </div>
     <div class="post-link">
-      {_link('/index.html', 'index')}
+      {_link('/biketotheearth/index.html', 'index')}
     </div>
   </div>
   post = \
