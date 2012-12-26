@@ -1,0 +1,49 @@
+html, body {
+  font-family: 'Lusitana', serif;
+  line-height: 1.5;
+  color: #222;
+  background-color: #eee;
+}
+
+a {
+  text-decoration: none;
+  color: #d40;
+}
+
+a:hover {
+  background-color: #fdc;
+}
+
+.post-link {
+  display: inline-block;
+}
+
+.post-link > a {
+  padding: 4px;
+}
+
+.country-icon {
+  display: inline-block;
+  width: 25px;
+}
+
+.country-name {
+  display: inline-block;
+  font-size: 120%;
+  color: #444;
+}
+
+.post-date {
+  display: inline-block;
+  font-size: 80%;
+  color: #444;
+  width: 100px;
+}
+
+#content {
+  margin-top: 24px;
+}
+
+.country {
+  margin-bottom: 16px;
+}
