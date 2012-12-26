@@ -18,10 +18,10 @@ def _parse_post(line):
   post_date = now.strptime(post['at'], date_format)
   path = os.path.join(
     'posts',
-    str(post_date.year),
-    str(post_date.month),
-    str(post_date.day),
-    post['permalink']
+    post_date.strftime('%Y'),
+    post_date.strftime('%m'),
+    post_date.strftime('%d'),
+    '{0}.html'.format(post['permalink'])
   )
   href = '/{0}'.format(path)
   country = post['icon'][-6:-4]
@@ -38,13 +38,12 @@ def _parse_post(line):
   }
 
 def _write_file(html, path):
-  print html
-  """
   filename = os.path.join(root, path)
-  os.makedirs(os.dirname(filename))
+  dirname = os.path.dirname(filename)
+  if not os.path.exists(dirname):
+    os.makedirs(dirname)
   with codecs.open(filename, mode='w', encoding='utf-8') as f:
       f.write(html)
-  """
 
 sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
 
