@@ -31,4 +31,4 @@ for i, data in enumerate(posts):
     data['next'] = posts[i + 1]
   data['date'] = datetime.datetime.strptime(data['date'], '%Y-%m-%dT%H:%M:%S')
   _write_file(render_post(data), data['path'])
-_write_file(render_index(posts), 'index.html')
+_write_file(render_index(posts), os.path.join('biketotheearth', 'index.html'))

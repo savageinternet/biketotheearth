@@ -12,6 +12,7 @@ def _parse_post(line):
   date_format = '%Y-%m-%dT%H:%M:%SZ'
   post_date = now.strptime(post['at'], date_format)
   path = os.path.join(
+    'biketotheearth',
     'posts',
     post_date.strftime('%Y'),
     post_date.strftime('%m'),
