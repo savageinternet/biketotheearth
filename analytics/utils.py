@@ -24,14 +24,18 @@ def identifyAuthor(data):
     return VALKYRIE
   return EVAN
 
-def normalizeToken(token):
-  token = unicode(token)
-  if not token.isalpha():
-    return None
-  return token.lower()
+def createNormalizer(allow_nonalpha=False,
+                     allow_stopwords=True):
+  def _f(token):
+    token = unicode(token)
+    if not allow_nonalpha and not token.isalpha():
+      return None
+    # TODO: allow_stopwords
+    return token.lower()
+  return _f
 
-def extractWords(doc):
+def extractWords(doc, normalize_fn):
   acc = Counter()
   for text in doc.find('body').itertext():
-    acc.update(filter(None, map(normalizeToken, nltk.word_tokenize(text))))
+    acc.update(filter(None, map(normalize_fn, nltk.word_tokenize(text))))
   return acc

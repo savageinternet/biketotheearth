@@ -8,12 +8,15 @@ from utils import *
 
 sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
 words = {EVAN: Counter(), VALKYRIE: Counter()}
+normalizer = createNormalizer(
+  allow_nonalpha=False,
+  allow_stopwords=False
+)
 for line in sys.stdin:
   data = json.loads(line)
   data['content'] = etree.HTML(data['content'])
   author = identifyAuthor(data)
-  words[author].update(extractWords(data['content']))
-
+  words[author].update(extractWords(data['content'], normalizer))
 totals = words[EVAN] + words[VALKYRIE]
 E = []
 for W, N in totals.iteritems():
