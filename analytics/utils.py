@@ -1,5 +1,6 @@
-from collections import Counter
+import math
 import nltk
+from collections import Counter
 
 VALKYRIE = 6851810
 EVAN = 122601542
@@ -41,3 +42,15 @@ def extractWords(doc, normalize_fn):
   for text in doc.find('body').itertext():
     acc.update(filter(None, map(normalize_fn, nltk.word_tokenize(text))))
   return acc
+
+def IDF(D):
+  df = Counter()
+  for d in D:
+    df.update(d.keys())
+  ND = float(len(D))
+  return {W: math.log(ND / N, 2) for W, N in df.iteritems()}
+
+def TF(d, a=0.4):
+  # see http://nlp.stanford.edu/IR-book/html/htmledition/maximum-tf-normalization-1.html
+  M = float(d.most_common(1)[0][1])
+  return {W: a + (1.0 - a) * N / M for W, N in d.iteritems()}
