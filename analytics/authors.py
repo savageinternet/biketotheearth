@@ -1,7 +1,6 @@
 import codecs
 import json
 import sys
-import nltk
 from collections import Counter
 from lxml import etree
 from utils import *

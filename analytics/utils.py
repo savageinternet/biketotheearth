@@ -24,13 +24,15 @@ def identifyAuthor(data):
     return VALKYRIE
   return EVAN
 
+stopwords = set(nltk.corpus.stopwords.words('english'))
 def createNormalizer(allow_nonalpha=False,
                      allow_stopwords=True):
   def _f(token):
     token = unicode(token)
     if not allow_nonalpha and not token.isalpha():
       return None
-    # TODO: allow_stopwords
+    if not allow_stopwords and token in stopwords:
+      return None
     return token.lower()
   return _f
 
