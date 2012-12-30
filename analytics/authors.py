@@ -6,6 +6,7 @@ from lxml import etree
 from utils import *
 
 sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
+D = []
 words = {EVAN: Counter(), VALKYRIE: Counter()}
 normalizer = createNormalizer(
   allow_nonalpha=False,
@@ -15,14 +16,22 @@ for line in sys.stdin:
   data = json.loads(line)
   data['content'] = etree.HTML(data['content'])
   author = identifyAuthor(data)
-  words[author].update(extractWords(data['content'], normalizer))
+  doc = extractWords(data['content'], normalizer)
+  words[author].update(doc)
+  D.append(doc)
 totals = words[EVAN] + words[VALKYRIE]
-E = []
+idf = IDF(D)
+out = []
 for W, N in totals.iteritems():
-  if N < 5 or len(W) < 2:
-    continue
-  e = words[EVAN][W] / float(N)
-  E.append((W, N, e))
-E.sort(key=lambda x: (x[2], x[1], x[0]))
-for W, N, e in E:
-  print '%30s %10d %10.4f %10.4f' % (W, N, e, 1.0 - e)
+  E = words[EVAN][W]
+  out.append({
+    'word' : W,
+    'count' : {
+      'evan' : E,
+      'valkyrie' : N - E,
+      'total' : N
+    },
+    'idf': idf[W]
+  })
+
+print json.dumps(out)

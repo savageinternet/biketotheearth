@@ -14,12 +14,14 @@ normalizer = createNormalizer(
 for line in sys.stdin:
   data = json.loads(line)
   data['content'] = etree.HTML(data['content'])
-  D[data['path']] = extractWords(data['content'], normalizer)
+  D[data['href']] = extractWords(data['content'], normalizer)
 idf = IDF(D.values())
+out = {}
 for k, d in sorted(D.iteritems()):
   tf = TF(d, a=0.4)
   r = [(W, tf[W] * idf[W]) for W in tf]
   r.sort(key=lambda x: (x[1], x[0]), reverse=True)
   gs = itertools.groupby(r, key=lambda x: x[1])
   gs = itertools.imap(lambda g: (g[0], [x[0] for x in g[1]]), gs)
-  print json.dumps({k: list(itertools.islice(gs, 3))})
+  out[k] = list(gs)
+print json.dumps(out)
