@@ -10,7 +10,7 @@ D = []
 words = {EVAN: Counter(), VALKYRIE: Counter()}
 normalizer = createNormalizer(
   allow_nonalpha=False,
-  allow_stopwords=False
+  allow_stopwords=True
 )
 for line in sys.stdin:
   data = json.loads(line)

@@ -1,0 +1,9 @@
+I fetched the routes using
+
+cat route-ids | while read route_id;
+  do echo "Downloading route $route_id...";
+  curl "http://www.mapmyfitness.com/ws/4p/routes/get_route_kml?consumer_key=b513571b80685c74fa95b7755d916c24048889df4&route_id=$route_id&display_custom_marker_flag=1&last_updated=3" > $route_id.kml;
+done
+
+which I figured out by viewing MapMyRide's maps in Google Maps and playing
+around with the route_id parameter.
