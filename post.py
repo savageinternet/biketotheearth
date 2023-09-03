@@ -32,8 +32,8 @@ class :ui:page(:x:element):
         <head>
           <meta charset="UTF-8" />
           <title>{self.getAttribute('title')}</title>
-          <link href='http://fonts.googleapis.com/css?family=Lusitana:400,700' rel='stylesheet' type='text/css' />
-          <link href='/biketotheearth/style.css' rel='stylesheet' type='text/css' />
+          <link href='https://fonts.googleapis.com/css?family=Lusitana:400,700' rel='stylesheet' type='text/css' />
+          <link href='/style.css' rel='stylesheet' type='text/css' />
         </head>
         <body>
           {self.getChildren()}
@@ -57,7 +57,7 @@ class :ui:index-section(:x:element):
     return \
     <div class="country" id={country}>
       <div class="country-icon">
-        <img src={'/biketotheearth/icons/{0}.png'.format(country)} />
+        <img src={'/icons/{0}.png'.format(country)} />
       </div>
       <div class="country-name">
         {country_names[country]}
@@ -116,7 +116,7 @@ def render_post(data):
       {_link(data['next'].get('href'), 'next')}
     </div>
     <div class="post-link">
-      {_link('/biketotheearth/index.html', 'index')}
+      {_link('/index.html', 'index')}
     </div>
   </div>
   post = \
@@ -129,7 +129,7 @@ def render_post(data):
       <div id="country">
         <div class="country-icon">
           <a href={country_href}>
-            <img src={'/biketotheearth/icons/{0}.png'.format(data['country'])} />
+            <img src={'/icons/{0}.png'.format(data['country'])} />
           </a>
         </div>
         <div class="country-name">
